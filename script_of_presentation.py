@@ -155,11 +155,20 @@ def create_visualizations(df, title):
 # Set up the page
 st.set_page_config(page_title="智云灌溉设备-日志数据分析平台", layout="wide")
 st.title("智云灌溉设备-日志数据分析平台")
-st.markdown(":red[**所有分析结果基于当前输入日志的[截止记录日期]: 05/07/2025**]")
+# st.markdown(":red[**所有分析结果基于当前输入日志的[截止记录日期]: 05/07/2025**]")
 
 # Create sidebar navigation
 st.sidebar.title("导航")
-page = st.sidebar.radio("我的数据分析项目", ["统计表概览", "异常值检测", "相关性分析", "聚类分析"])
+page = st.sidebar.radio("我的数据分析项目", ["统计表概览", "异常值检测", "相关性分析", "聚类分析 (进行中)"])
+
+# Add secondary subheader
+st.sidebar.markdown("---")  # Add a separator
+st.sidebar.subheader("数据说明")
+st.sidebar.markdown("""
+- 日志截止日期: 05/07/2025
+- 数据来源: 海大项目
+- 演示版本: v1.0
+""")
 
 # Load the dataframes
 df_general_log_stat_haida = get_your_df(
@@ -367,6 +376,9 @@ elif page == "异常值检测":
     else:
         st.info("当前数据集中未检测到异常值")
         st.markdown("---")
+
+    st.markdown(":orange-badge[⚠️ **观察记录 \& 要点汇报:**]")
+    st.markdown("理论上讲，异常值的丰富程度能够给相关性分析提供线索；例如，我们可能期望异常值丰富的特征 (例如最小信号强度、 中/弱信号切换次数等) 与设备的使用时长存在潜在的相关性")
     
     # Create two columns for side-by-side display
     col_left, col_right = st.columns([1, 1])
@@ -433,8 +445,6 @@ elif page == "异常值检测":
             
             st.plotly_chart(fig, use_container_width=True)
 
-    st.markdown(":orange-badge[⚠️ **观察记录 \& 要点汇报:**]")
-    st.markdown("理论上讲，异常值的丰富程度能够给相关性分析提供线索；例如，我们可能期望异常值丰富的特征 (例如最小信号强度、 中/弱信号切换次数等) 与设备的使用时长存在潜在的相关性")
 
 elif page == "相关性分析":
     st.markdown("---")
@@ -457,6 +467,16 @@ elif page == "相关性分析":
         current_df = df_general_log_stat_scaled_prob_haida
     
     st.subheader("相关性分析-1：线性相关系数")
+    st.markdown(":orange-badge[⚠️ **观察记录 \& 要点汇报:**]")
+    # Add correlation explanation
+    st.markdown("""
+    **相关性强度说明:**
+    - 强相关: $|r| > 0.7$
+    - 中等相关: $0.3 < |r| \leq 0.7$
+    - 弱相关: $|r| \leq 0.3$
+    
+    其中 $|r|$ 表示相关系数的绝对值
+    """)
     
     # Select target variable for correlation analysis
     target_vars = ['使用月数 (包含中途离线)', '实际使用月数 (不含中途离线)']
@@ -487,15 +507,7 @@ elif page == "相关性分析":
     
     overview_df = pd.DataFrame(overview_data)
     st.dataframe(overview_df, height=210)
-    
-    # Add correlation explanation
-    st.markdown("""
-    **相关性强度说明:**
-    - 强相关: |r| > 0.7
-    - 中等相关: 0.3 < |r| ≤ 0.7
-    - 弱相关: |r| ≤ 0.3
-    """)
-    
+
     st.markdown("---")
     
     # Create scatter plot for selected feature
@@ -626,12 +638,27 @@ elif page == "相关性分析":
     
     st.plotly_chart(fig, use_container_width=True)
 
+    st.markdown(":orange-badge[⚠️ **观察记录 \& 要点汇报:**]")
+    st.markdown("- 和设备使用时长具有显著正相关性的因素是：信号最大值、信号平均强度")
+    st.markdown("- 和设备使用时长具有显著负相关性的因素是：中等信号强度、设备待机次数")
+    st.markdown("- 疑似因素 (开启/关闭灌溉次数、信号强度切换的频次) 在数据经过放缩后相关性会消失")
+
     # Add a separator
     st.markdown("---")
     
     # Add new section for machine learning correlation analysis
-    st.subheader("相关性分析-2：机器学习 (象征性)")
+    st.subheader("相关性分析-2：机器学习 (随机森林算法)")
     
+    st.markdown(":orange-badge[⚠️ **观察记录 \& 要点汇报:**]")
+    st.markdown("- 机器学习模型可以补充性地反映数据之间的非线性关系 (如果适用)；但基于分析工作的复杂性和体量，其象征性意义大于实际意义")
+    st.markdown("- 特征重要性基于随机森林回归，其重要性分数表示每个特征对预测目标变量的贡献程度，分数越高表示该特征对目标变量的影响越大")
+    st.markdown("""
+    - 重要性分数的判断标准：
+        - 高重要性: 分数 $> 0.1$
+        - 中等重要性: $0.05 <$ 分数 $\leq 0.1$
+        - 低重要性: 分数 $\leq 0.05$
+    """)
+
     # Select target variable for ML analysis
     ml_target_vars = ['使用月数 (包含中途离线)', '实际使用月数 (不含中途离线)']
     selected_ml_target = st.selectbox(
@@ -764,18 +791,15 @@ elif page == "相关性分析":
     
     # Display feature importance plot
     st.plotly_chart(fig_ml, use_container_width=True)
-    
-    # Add explanation
-    st.markdown("""
-    **说明:**
-    - 特征重要性基于随机森林回归模型
-    - 重要性分数表示每个特征对预测目标变量的贡献程度
-    - 分数越高表示该特征对目标变量的影响越大
-    """)
 
-elif page == "聚类分析":
+    st.markdown(":orange-badge[⚠️ **观察记录 \& 要点汇报:**]")
+    st.markdown("- 机器学习算法判定了 “设备上线/下线的频次” 与使用时长之间可能存在某种相关性")
+    st.markdown("- 机器学习算法的判定结果弱化了 “信号最大值、平均信号强度” 与使用时长之间的相关性")
+    st.markdown("- 机器学习算法和线性回归同时判定 “设备待机次数” 与使用时长之间存在一定相关性")
+
+elif page == "聚类分析 (进行中)":
     st.markdown("---")
-    st.header("聚类分析")
+    st.header("聚类分析 (进行中)")
     
     # Add dataframe selection
     st.subheader("选择数据视图")
@@ -865,5 +889,7 @@ elif page == "聚类分析":
     - 每个使用月数下的特征值取平均值
     - 可以通过选择不同的特征来观察它们随使用月数的变化趋势
     """)
+
+    
 
     
