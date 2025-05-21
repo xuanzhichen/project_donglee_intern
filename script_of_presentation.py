@@ -10,6 +10,7 @@ plt.style.use('seaborn-v0_8')
 sns.set_palette("husl")
 
 # Set up the project root path and superior input path
+# project_root_path = 'D:\project_code\project_donglee_intern'
 project_root_path = 'D:\project_code\project_donglee_intern'
 input_superior_path = 'output'
 
