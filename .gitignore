@@ -41,4 +41,4 @@ output/quasi_drop/*.xlsx
 
 # Large files
 # data/**/*.xlsx
-data/quasi_drop/*.xlsx 
+# data/quasi_drop/*.xlsx 
