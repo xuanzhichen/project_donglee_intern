@@ -37,4 +37,8 @@ Thumbs.db
 
 # Project specific
 output/*.xlsx
-*.log 
+*.log
+
+# Large files
+# data/**/*.xlsx
+data/quasi_drop/*.xlsx 
