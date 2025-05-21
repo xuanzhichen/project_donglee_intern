@@ -36,7 +36,7 @@ ENV/
 Thumbs.db
 
 # Project specific
-output/*.xlsx
+output/quasi_drop/*.xlsx
 *.log
 
 # Large files
