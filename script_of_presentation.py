@@ -10,8 +10,7 @@ plt.style.use('seaborn-v0_8')
 sns.set_palette("husl")
 
 # Set up the project root path and superior input path
-# project_root_path = 'D:\project_code\project_donglee_intern'
-project_root_path = 'project_code\project_donglee_intern'
+project_root_path = '.'  # Use current directory
 input_superior_path = 'output'
 
 def get_your_df(input_superior_path, file_name):
