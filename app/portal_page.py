@@ -59,7 +59,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 #     st.markdown("该页面正在建设中...", help="该部分内容会在正式部署后完善")
 
 
-# Get the absolute path to the image file
+# Get the absolute path to the image file (streamlit's dev env cannot identify the previous relative path)
 image_path = os.path.join(os.path.dirname(__file__), "image", "donglee_zhiyun_logo_2_2.png")
 
 # Check if the image file exists before trying to use it
