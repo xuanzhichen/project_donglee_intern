@@ -60,9 +60,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 st.logo(
-    image="image/donglee_zhiyun_logo_2_2.png",
+    image=".image/donglee_zhiyun_logo_2_2.png",
     size="large",
-    icon_image="image/donglee_zhiyun_logo_2_2.png"
+    icon_image=".image/donglee_zhiyun_logo_2_2.png"
 )
 
 pages = [
