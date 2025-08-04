@@ -8,7 +8,7 @@
 
 该平台基于 Python-Streamlit 框架开发，后期方向是考虑与智云公司的 IoT 平台进行衔接。
             
-该目标被划分为三个处理阶段：（代码的）接口与封装，实时数据分析，以及平台部署。因此，此部分内容主要是面向智云产品部内部开发者的工作交接说明。源码位于项目根目录的 [`app/`](https://github.com/xuanzhichen/project_donglee_intern/tree/main/app) 路径下。
+该目标被划分为三个处理阶段：（代码的）接口与封装，实时数据分析，以及平台部署。因此，此部分内容主要是面向智云产品部内部开发者的工作交接说明。[源码](https://github.com/xuanzhichen/project_donglee_intern/tree/main/app)位于项目根目录的 `app/` 路径下。
 
 ## 接口与封装说明
 
