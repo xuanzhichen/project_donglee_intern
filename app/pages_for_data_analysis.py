@@ -351,8 +351,9 @@ class PagesDataAnalysis:
             # )
             st.markdown("### 样例日志（预加载）")
             st.markdown(f"文件名（类型）：`{uploaded_file.name}`")
+            image_path = os.path.join(os.path.dirname(__file__), "image", "testing_instance.png")
             st.image(
-                "image/testing_instance.png", 
+                image=image_path, 
                 caption="内含 10 个智能控制器日志的样例压缩包，每个日志文件的格式与“单设备处理”模块中的（预加载）样例相同",
                 # width=700
             )
