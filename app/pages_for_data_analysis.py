@@ -18,6 +18,7 @@ import pandas as pd
 import zipfile
 import io
 import time
+import os
 
 import streamlit as st
 
@@ -213,7 +214,7 @@ class PagesDataAnalysis:
         # Manufacture a file-like object for default status
         if uploaded_file is None:
 
-            default_path = "../data/testing_instances_for_app/智能控制器样例日志（简化测试版）.xlsx"
+            default_path = os.path.join(os.path.dirname(__file__), "..", "data", "testing_instances_for_app", "智能控制器样例日志（简化测试版）.xlsx")
 
             with open(default_path, "rb") as f:
                 file_bytes = f.read()
@@ -334,7 +335,7 @@ class PagesDataAnalysis:
 
         if uploaded_file is None:
 
-            default_path = "../data/testing_instances_for_app/智能控制器样例日志（简化测试版）.zip"
+            default_path = os.path.join(os.path.dirname(__file__), "..", "data", "testing_instances_for_app", "智能控制器样例日志（简化测试版）.zip")
 
             with open(default_path, "rb") as f:
                 file_bytes = f.read()
