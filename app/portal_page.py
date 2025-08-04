@@ -59,11 +59,19 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 #     st.markdown("该页面正在建设中...", help="该部分内容会在正式部署后完善")
 
 
-st.logo(
-    image=".image/donglee_zhiyun_logo_2_2.png",
-    size="large",
-    icon_image=".image/donglee_zhiyun_logo_2_2.png"
-)
+# Get the absolute path to the image file
+image_path = os.path.join(os.path.dirname(__file__), "image", "donglee_zhiyun_logo_2_2.png")
+
+# Check if the image file exists before trying to use it
+if os.path.exists(image_path):
+    st.logo(
+        image=image_path,
+        size="large",
+        icon_image=image_path
+    )
+else:
+    # Fallback: use a simple title instead of logo
+    st.title("智能控制器-日志数据分析平台")
 
 pages = [
     st.Page(
